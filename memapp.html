@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Memorization</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- <h2>Memorising.....</h2> -->
+    <div>
+        <select id="surah">
+            <!-- Add Surah options -->
+            <option value="001">Surah 1</option>
+            <option value="002">Surah 2</option>
+            <!-- Add more Surahs as needed -->
+            <option value="018">Surah 18</option>
+        </select>
+        <select id="ayah">
+            <!-- Add Ayah options -->
+            <option value="001">Ayah 1</option>
+            <option value="002">Ayah 2</option>
+            <!-- Add more Ayahs as needed -->
+            <option value="029">Ayah 29</option>
+        </select>
+    </div>
+
+    <!-- <button onclick="fetchImage()">Memorize</button> -->
+
+    <div id="imagePlaceholder">
+        <!-- Image will be inserted here based on logic -->
+    </div>
+
+    <div class="botón" id="playButton" onclick="this.classList.toggle('active')">
+        <div class="fondo"></div>
+        <div class="icono">
+            <div class="parte izquierda"></div>
+            <div class="parte derecha"></div>
+        </div>
+        <div class="puntero"></div>
+    </div>
+
+    <!-- <button id="submitButton" onclick="showSuccessPopup()">Submit</button> -->
+
+    <audio id="audioPlayer" controls style="display:none;"></audio>
+
+
+    <script>
+        
+        var playButton = document.getElementById('playButton');
+        var audioPlayer = document.getElementById('audioPlayer');
+
+        playButton.addEventListener('click', function() {
+            var surah = document.getElementById('surah').value;
+            var ayah = document.getElementById('ayah').value;
+            var url = `https://everyayah.com/data/Alafasy_128kbps/${surah}${ayah}.mp3`;
+
+            if (audioPlayer.src !== url) {
+                audioPlayer.src = url;
+                audioPlayer.play();
+                this.classList.add('active');
+            } else {
+                if (audioPlayer.paused) {
+                    audioPlayer.play();
+                    this.classList.add('active');
+                } else {
+                    audioPlayer.pause();
+                    this.classList.remove('active');
+                }
+            }
+        });
+
+        audioPlayer.addEventListener('ended', function() {
+            playButton.classList.remove('active');
+        });
+
+        function showSuccessPopup() {
+            alert("Success!");
+        }
+
+        function fetchImage() {
+            var surah = document.getElementById("surah").value;
+            var ayah = document.getElementById("ayah").value;
+            var imagePlaceholder = document.getElementById("imagePlaceholder");
+
+            surah = surah.replace(/^0+/, '');
+            ayah = ayah.replace(/^0+/, '');
+
+            // Transform Surah and Ayah numbers
+            var transformedText = surah + '_' + ayah;
+
+            var imageUrl = `https://everyayah.com/data/images_png/${transformedText}.png`;
+            var img = new Image();
+            img.onload = function () {
+                imagePlaceholder.innerHTML = '';
+                imagePlaceholder.appendChild(img);
+            };
+            img.onerror = function () {
+                imagePlaceholder.innerHTML = 'Image not found';
+            };
+            img.src = imageUrl;
+        }
+    </script>
+
+</body>
+</html>
