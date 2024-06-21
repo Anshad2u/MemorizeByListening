@@ -50,12 +50,14 @@
     <!-- <button id="submitButton" onclick="showSuccessPopup()">Submit</button> -->
 
     <audio id="audioPlayer" controls style="display:none;"></audio>
-
+    <audio id="numberPlayer" controls style="display:none;"></audio>
 
     <script>
-        
         var playButton = document.getElementById('playButton');
         var audioPlayer = document.getElementById('audioPlayer');
+        var numberPlayer = document.getElementById('numberPlayer');
+        var repeatCount = 10;
+        var playCount = 0;
 
         playButton.addEventListener('click', function() {
             var lot = document.getElementById('lot').value;
@@ -63,7 +65,8 @@
 
             if (audioPlayer.src !== url) {
                 audioPlayer.src = url;
-                audioPlayer.play();
+                playCount = 1;
+                playNumberAudio(playCount);
                 this.classList.add('active');
             } else {
                 if (audioPlayer.paused) {
@@ -77,8 +80,24 @@
         });
 
         audioPlayer.addEventListener('ended', function() {
-            playButton.classList.remove('active');
+            if (playCount < repeatCount) {
+                playCount++;
+                playNumberAudio(playCount);
+            } else {
+                playButton.classList.remove('active');
+                playCount = 0;
+            }
         });
+
+        numberPlayer.addEventListener('ended', function() {
+            audioPlayer.play();
+        });
+
+        function playNumberAudio(number) {
+            var numberUrl = `https://raw.githubusercontent.com/Anshad2u/MemorizeByListening/main/docs/audios/numbers/${number}.mp3`;
+            numberPlayer.src = numberUrl;
+            numberPlayer.play();
+        }
 
         function showSuccessPopup() {
             alert("Success!");
