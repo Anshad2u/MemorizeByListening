@@ -9,19 +9,26 @@
 <body>
     <!-- <h2>Memorising.....</h2> -->
     <div>
-        <select id="surah">
-            <!-- Add Surah options -->
-            <option value="001">Surah 1</option>
-            <option value="002">Surah 2</option>
-            <!-- Add more Surahs as needed -->
-            <option value="018">Surah 18</option>
-        </select>
-        <select id="ayah">
-            <!-- Add Ayah options -->
-            <option value="001">Ayah 1</option>
-            <option value="002">Ayah 2</option>
-            <!-- Add more Ayahs as needed -->
-            <option value="029">Ayah 29</option>
+        <select id="lot">
+            <!-- Add Lot options -->
+            <option value="1">42 Shura - Set 1</option>
+            <option value="2">42 Shura - Set 2</option>
+            <option value="3">42 Shura - Set 3</option>
+            <option value="4">42 Shura - Set 4</option>
+            <option value="5">42 Shura - Set 5</option>
+            <option value="6">42 Shura - Set 6</option>
+            <option value="7">42 Shura - Set 7</option>
+            <option value="8">42 Shura - Set 8</option>
+            <option value="9">42 Shura - Set 9</option>
+            <option value="10">42 Shura - Set 10</option>
+            <option value="11">42 Shura - Set 11</option>
+            <option value="12">42 Shura - Set 12</option>
+            <option value="13">42 Shura - Set 13</option>
+            <option value="14">42 Shura - Set 14</option>
+            <option value="15">42 Shura - Set 15</option>
+            <option value="16">42 Shura - Set 16</option>
+            <option value="17">42 Shura - Set 17</option>
+            <option value="18">42 Shura - Set 18</option>
         </select>
     </div>
 
@@ -51,9 +58,8 @@
         var audioPlayer = document.getElementById('audioPlayer');
 
         playButton.addEventListener('click', function() {
-            var surah = document.getElementById('surah').value;
-            var ayah = document.getElementById('ayah').value;
-            var url = `https://everyayah.com/data/Alafasy_128kbps/${surah}${ayah}.mp3`;
+            var lot = document.getElementById('lot').value;
+            var url = `https://raw.githubusercontent.com/Anshad2u/MemorizeByListening/main/docs/audios/verse-sets/AlAjamy_lot_${lot}.mp3`;
 
             if (audioPlayer.src !== url) {
                 audioPlayer.src = url;
@@ -79,15 +85,11 @@
         }
 
         function fetchImage() {
-            var surah = document.getElementById("surah").value;
-            var ayah = document.getElementById("ayah").value;
+            var lot = document.getElementById("lot").value;
             var imagePlaceholder = document.getElementById("imagePlaceholder");
 
-            surah = surah.replace(/^0+/, '');
-            ayah = ayah.replace(/^0+/, '');
-
-            // Transform Surah and Ayah numbers
-            var transformedText = surah + '_' + ayah;
+            // Transform Lot number
+            var transformedText = 'AlAjamy_lot_' + lot;
 
             var imageUrl = `https://everyayah.com/data/images_png/${transformedText}.png`;
             var img = new Image();
